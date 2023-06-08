@@ -1,18 +1,16 @@
 package com.abhijeetpadhy.SocialHub.controller;
 
 import com.abhijeetpadhy.SocialHub.auth.UserPrincipal;
-import com.abhijeetpadhy.SocialHub.business.domain.MessageDTO;
-import com.abhijeetpadhy.SocialHub.business.domain.NotificationDTO;
-import com.abhijeetpadhy.SocialHub.business.domain.UserEntryDTO;
-import com.abhijeetpadhy.SocialHub.business.service.MessageService;
-import com.abhijeetpadhy.SocialHub.business.service.NotificationService;
-import com.abhijeetpadhy.SocialHub.business.service.UserService;
+import com.abhijeetpadhy.SocialHub.business.domain.*;
+import com.abhijeetpadhy.SocialHub.business.service.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,11 +19,15 @@ public class FeedsController {
     private final UserService userService;
     private final NotificationService notifService;
     private final MessageService messageService;
+    private final PostService postService;
+    private final FeedsService feedsService;
 
-    public FeedsController(UserService userService, NotificationService notifService, MessageService messageService) {
+    public FeedsController(UserService userService, NotificationService notifService, MessageService messageService, PostService postService, FeedsService feedsService) {
         this.userService = userService;
         this.notifService = notifService;
         this.messageService = messageService;
+        this.postService = postService;
+        this.feedsService = feedsService;
     }
 
     @GetMapping("/feeds")
@@ -50,6 +52,11 @@ public class FeedsController {
         model.addAttribute("messagesFrom", map);
         model.addAttribute("unseenMessagesCount", listOfUnseenMessages.size());
 
+        model.addAttribute("postInputDTO", new PostInputDTO());
+
+        List<PostDTO> newsFeeds = feedsService.getAllFeeds(username);
+        model.addAttribute("feeds", newsFeeds);
+
         return "feeds";
     }
 
@@ -60,5 +67,24 @@ public class FeedsController {
         String username = userPrincipal.getUsername();
         notifService.readAllNotifs(username);
         return "redirect:feeds";
+    }
+
+    // There is an error when max file size exceeds 1048576 bytes. We need to correct it!
+    @PostMapping("/feeds")
+    public String processForm(@ModelAttribute PostInputDTO postInputDTO, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) auth.getPrincipal();
+        String username = userPrincipal.getUsername();
+
+        PostDTO postDTO = new PostDTO();
+        postDTO.setContent(postInputDTO.getContent());
+        postDTO.setUsername(username);
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+        postDTO.setCreated(currentTimestamp);
+
+        boolean postSuccess = postService.addPost(postDTO, postInputDTO.getImage());
+        if(postSuccess)
+            model.addAttribute("postSuccess", true);
+        return displayFeeds(model);
     }
 }

@@ -270,115 +270,68 @@
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
-
-            <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Sales <span>| Today</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card revenue-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Revenue Card -->
-
             <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
-
+            <div class="col-12">
               <div class="card info-card customers-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
                 <div class="card-body">
-                  <h5 class="card-title">Customers <span>| This Year</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-people"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>1244</h6>
-                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
-
-                    </div>
-                  </div>
-
+                  <h5 class="card-title">New Post</h5>
+                    <form id="myForm" action="/feeds" th:object="${postInputDTO}" method="post" enctype="multipart/form-data">
+                      <div class="row mb-3">
+                        <div class="col-sm-12">
+                          <textarea class="form-control" placeholder="What's on your mind?" id="floatingTextarea" style="height: 100px;" th:field="*{content}"></textarea>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-sm-12">
+                          <input class="form-control" type="file" id="formFile" th:field="*{image}">
+                        </div>
+                      </div>
+                      
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary">POST</button>
+                      </div>
+                    </form>
                 </div>
               </div>
-
-            </div><!-- End Customers Card -->
+            </div><!-- End Post Card -->
           </div>
+          
+          <div class="col-6" th:each="feed : ${feeds}">
+            <div class="card info-card sales-card">
+  
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+  
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+  
+              <div class="card-body">
+                <h5 class="card-title" th:text="${feed.username}">Sales </h5>
+                <p class="text-muted small" th:text="${feed.created}">Today</p>
+                <p th:text="${feed.content}">I have to tell you something!</p>
+                <div class="d-flex justify-content-between">
+                  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-danger"><i class="bi bi-hand-thumbs-up"></i></button>
+                    <button type="button" class="btn btn-warning"><i class="bi bi-chat-dots"></i></button>
+                    <button type="button" class="btn btn-success"><i class="bi bi-share"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
         </div><!-- End Left side columns -->
+
+        
 
         <!-- Right side columns -->
         <div class="col-lg-4">

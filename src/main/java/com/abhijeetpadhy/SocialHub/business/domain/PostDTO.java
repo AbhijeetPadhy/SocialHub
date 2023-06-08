@@ -1,28 +1,12 @@
-package com.abhijeetpadhy.SocialHub.model.entity;
+package com.abhijeetpadhy.SocialHub.business.domain;
 
-import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "POSTS")
-public class Posts {
-    @Id
-    @Column(name = "POST_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PostDTO {
     private long postId;
-
-    @Column(name = "USERNAME")
     private String username;
-
-    @Column(name = "CREATED")
     private Timestamp created;
-
-    @Column(name = "CONTENT")
     private String content;
-
-    @Column(name = "PHOTONAME")
     private String photoName;
 
     public long getPostId() {
