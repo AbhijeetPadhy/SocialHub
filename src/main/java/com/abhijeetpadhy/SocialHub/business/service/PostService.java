@@ -23,8 +23,7 @@ public class PostService {
     private final FeedsService feedsService;
     int photoFileName = 0;
 
-    @Value("${photos.directory}")
-    private String photosDirectory;
+    private String photosDirectory = "/uploads";
 
     public PostService(PostsRepository postsRepository, FeedsService feedsService) {
         this.postsRepository = postsRepository;

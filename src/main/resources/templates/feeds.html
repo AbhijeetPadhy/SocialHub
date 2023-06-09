@@ -317,6 +317,7 @@
                 <h5 class="card-title" th:text="${feed.username}">Sales </h5>
                 <p class="text-muted small" th:text="${feed.created}">Today</p>
                 <p th:text="${feed.content}">I have to tell you something!</p>
+                <img th:if="${feed.hasPhoto()}" th:src="${feed.photoPath}" class="card-img-bottom" alt="...">
                 <div class="d-flex justify-content-between">
                   <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                     <button type="button" class="btn btn-danger"><i class="bi bi-hand-thumbs-up"></i></button>

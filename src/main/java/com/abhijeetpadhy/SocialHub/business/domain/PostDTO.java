@@ -1,5 +1,7 @@
 package com.abhijeetpadhy.SocialHub.business.domain;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.sql.Timestamp;
 
 public class PostDTO {
@@ -8,6 +10,9 @@ public class PostDTO {
     private Timestamp created;
     private String content;
     private String photoName;
+    private String photoPath;
+
+    private String photosDirectory = "/uploads";
 
     public long getPostId() {
         return postId;
@@ -47,5 +52,16 @@ public class PostDTO {
 
     public void setPhotoName(String photoName) {
         this.photoName = photoName;
+        photoPath = photosDirectory + "/" + photoName;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public boolean hasPhoto() {
+        if(getPhotoName() == null)
+            return false;
+        return true;
     }
 }
