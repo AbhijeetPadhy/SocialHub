@@ -23,7 +23,7 @@ public class PostService {
     private final FeedsService feedsService;
     int photoFileName = 0;
 
-    private String photosDirectory = "/uploads";
+    private String photosDirectory = "uploads";
 
     public PostService(PostsRepository postsRepository, FeedsService feedsService) {
         this.postsRepository = postsRepository;
