@@ -28,16 +28,25 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("cannot find username: " + username);
         return new UserPrincipal(user);
     }
+    private UserEntryDTO getDTOFromEntity(User userEntity) {
+        UserEntryDTO userEntryDTO = new UserEntryDTO();
+        userEntryDTO.setEmail(userEntity.getEmail());
+        userEntryDTO.setName(userEntity.getName());
+        userEntryDTO.setUsername(userEntity.getUsername());
+        return userEntryDTO;
+    }
 
     public List<UserEntryDTO> getAllUsers() {
         List<UserEntryDTO> listOfUsers = new ArrayList<>();
-        for(User user : userRepository.findAll()){
-            UserEntryDTO userEntryDTO = new UserEntryDTO();
-            userEntryDTO.setEmail(user.getEmail());
-            userEntryDTO.setName(user.getName());
-            userEntryDTO.setUsername(user.getUsername());
-            listOfUsers.add(userEntryDTO);
-        }
+        for(User user : userRepository.findAll())
+            listOfUsers.add(getDTOFromEntity(user));
+        return listOfUsers;
+    }
+
+    public List<UserEntryDTO> getAllStrangers(String username) {
+        List<UserEntryDTO> listOfUsers = new ArrayList<>();
+        for(User user : userRepository.findAllStrangers(username))
+            listOfUsers.add(getDTOFromEntity(user));
         return listOfUsers;
     }
 
