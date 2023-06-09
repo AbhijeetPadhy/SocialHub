@@ -52,7 +52,7 @@ public class PostDTO {
 
     public void setPhotoName(String photoName) {
         this.photoName = photoName;
-        photoPath = photosDirectory + "/" + photoName;
+        photoPath = "fetch?postid=" + getPostId();
     }
 
     public String getPhotoPath() {
