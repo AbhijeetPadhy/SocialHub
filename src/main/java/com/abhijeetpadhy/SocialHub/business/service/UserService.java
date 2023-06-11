@@ -33,6 +33,7 @@ public class UserService implements UserDetailsService {
         userEntryDTO.setEmail(userEntity.getEmail());
         userEntryDTO.setName(userEntity.getName());
         userEntryDTO.setUsername(userEntity.getUsername());
+        userEntryDTO.setProfilePhotoName(userEntity.getProfilePhotoName());
         return userEntryDTO;
     }
 
@@ -65,10 +66,6 @@ public class UserService implements UserDetailsService {
 
     public UserEntryDTO getUserDetails(String username) {
         User user = userRepository.findByUsername(username);
-        UserEntryDTO userEntryDTO = new UserEntryDTO();
-        userEntryDTO.setName(user.getName());
-        userEntryDTO.setEmail(user.getEmail());
-        userEntryDTO.setUsername(user.getUsername());
-        return userEntryDTO;
+        return getDTOFromEntity(user);
     }
 }

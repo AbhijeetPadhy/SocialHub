@@ -20,6 +20,9 @@ public class User {
     @Column(name = "PASSWORD")
     private String password;
 
+    @Column(name = "PROFILE_PHOTO_NAME")
+    private String profilePhotoName;
+
     public String getName() {
         return name;
     }
@@ -50,5 +53,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = (new BCryptPasswordEncoder(11)).encode(password);
+    }
+
+    public String getProfilePhotoName() {
+        return profilePhotoName;
+    }
+
+    public void setProfilePhotoName(String profilePhotoName) {
+        this.profilePhotoName = profilePhotoName;
     }
 }

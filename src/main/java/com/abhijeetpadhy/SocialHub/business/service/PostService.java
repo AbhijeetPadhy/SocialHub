@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class PostService {
@@ -23,7 +21,8 @@ public class PostService {
     private final FeedsService feedsService;
     int photoFileName = 0;
 
-    private String photosDirectory = "uploads";
+    @Value("${posts.photos.directory}")
+    private String postsPhotosDirectory;
 
     public PostService(PostsRepository postsRepository, FeedsService feedsService) {
         this.postsRepository = postsRepository;
@@ -42,7 +41,7 @@ public class PostService {
         }
 
         try {
-            Path storagePath = Path.of(photosDirectory);
+            Path storagePath = Path.of(postsPhotosDirectory);
             if (!Files.exists(storagePath)) {
                 Files.createDirectories(storagePath);
             }

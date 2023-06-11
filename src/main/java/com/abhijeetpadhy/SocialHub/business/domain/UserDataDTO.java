@@ -1,32 +1,15 @@
-package com.abhijeetpadhy.SocialHub.model.entity;
+package com.abhijeetpadhy.SocialHub.business.domain;
 
-import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "USER_DATA")
-public class UserData {
-    @Id
-    @Column(name = "USERNAME")
+public class UserDataDTO {
     private String username;
-
-    @Column(name = "DOB")
     private Date DOB;
-
-    @Column(name = "ABOUT")
     private String about;
-
-    @Column(name = "PROFESSION")
     private String profession;
-
-    @Column(name = "PLACE")
     private String place;
-
-    @Column(name = "GENDER")
     private char gender;
-
-    @Column(name = "LAST_MODIFIED")
     private Timestamp lastModified;
 
     public String getUsername() {

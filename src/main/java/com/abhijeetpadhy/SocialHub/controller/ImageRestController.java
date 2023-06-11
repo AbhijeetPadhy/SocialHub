@@ -19,13 +19,18 @@ public class ImageRestController {
         this.imageService = imageService;
     }
 
-    @GetMapping
-    public ResponseEntity<byte[]> getImage(@RequestParam("postid") String postId, Model model) throws IOException {
+    @GetMapping("/post/{postid}")
+    public ResponseEntity<byte[]> getPostImage(@PathVariable("postid") String postId, Model model) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal) auth.getPrincipal();
         String username = userPrincipal.getUsername();
         ResponseEntity<byte[]> image = imageService.loadImage(username, Long.parseLong(postId));
         return image;
+    }
 
+    @GetMapping("/profile/{username}")
+    public ResponseEntity<byte[]> getProfileImage(@PathVariable("username") String username, Model model) throws IOException {
+        ResponseEntity<byte[]> image = imageService.loadProfileImage(username);
+        return image;
     }
 }
