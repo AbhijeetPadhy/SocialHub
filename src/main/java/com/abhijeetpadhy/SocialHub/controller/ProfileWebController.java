@@ -1,7 +1,6 @@
 package com.abhijeetpadhy.SocialHub.controller;
 
 import com.abhijeetpadhy.SocialHub.auth.UserPrincipal;
-import com.abhijeetpadhy.SocialHub.business.domain.UserDataInputDTO;
 import com.abhijeetpadhy.SocialHub.business.domain.UserDataDTO;
 import com.abhijeetpadhy.SocialHub.business.service.NavbarService;
 import com.abhijeetpadhy.SocialHub.business.service.ProfileService;
@@ -40,8 +39,6 @@ public class ProfileWebController {
         UserDataDTO userDataDTO = userDataService.getUserData(username);
         model.addAttribute("userData", userDataDTO);
 
-        model.addAttribute("userDataInputDTO", new UserDataInputDTO());
-
         return "profile";
     }
 
@@ -52,17 +49,18 @@ public class ProfileWebController {
     }
 
     @PostMapping("/edituserdata")
-    public String processForm(@ModelAttribute UserDataInputDTO userDataInputDTO, Model model) {
+    public String processForm(@ModelAttribute UserDataDTO userDataDTO, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal) auth.getPrincipal();
         String username = userPrincipal.getUsername();
 
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-        userDataInputDTO.setLastUpdated(currentTimestamp);
+        userDataDTO.setLastModified(currentTimestamp);
 
-        boolean postSuccess = profileService.updateUserData(userDataInputDTO, username);
+        boolean postSuccess = profileService.updateUserData(userDataDTO, username);
         if (postSuccess)
             model.addAttribute("updateSuccess", true);
-        return displayProfile(model);
+        //use react in future to make updates instead of page visits/redirects
+        return "redirect:profile";
     }
 }

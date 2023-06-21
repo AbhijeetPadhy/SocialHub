@@ -45,4 +45,8 @@ public class UserEntryDTO {
             return false;
         return true;
     }
+
+    public String getProfilePhotoPath() {
+        return profilePhotoPath;
+    }
 }

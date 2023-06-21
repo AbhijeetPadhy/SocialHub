@@ -359,9 +359,9 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit" role="tabpanel">
 
                   <!-- Profile Edit Form -->
-                  <form th:object="${userDataInputDTO}" action="/edituserdata" method="post" enctype="multipart/form-data">
+                  <form th:object="${userData}" action="/edituserdata" method="post" enctype="multipart/form-data">
                     <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                      <label for="preview" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
                         <img th:src="(${user.hasProfilePhoto})? ${user.profilePhotoPath} : '/assets_niceadmin/img/person.png'" alt="Profile" class="rounded-circle" id="preview">
                         <div class="pt-2">
@@ -374,7 +374,7 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" th:value="${user.name}" th:field="*{name}">
+                        <input name="fullName" type="text" class="form-control" id="fullName" th:field="*{name}">
                       </div>
                     </div>
 
@@ -388,28 +388,28 @@
                     <div class="row mb-3">
                       <label for="place" class="col-md-4 col-lg-3 col-form-label">Place</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="place" type="text" class="form-control" id="place" th:value="${userData.place}" th:field="*{place}">
+                        <input name="place" type="text" class="form-control" id="place" th:field="*{place}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" th:value="${userData.profession}" th:field="*{profession}">
+                        <input name="job" type="text" class="form-control" id="Job" th:field="*{profession}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="dateInput" class="col-md-4 col-lg-3 col-form-label">Date of Birth</label>
                       <div class="col-md-8 col-lg-9">
-                        <input type="date" class="form-control" id="dateInput" name="date" th:value="${userData.DOB}" th:field="*{DOB}">
+                        <input type="date" class="form-control" id="dateInput" name="date" th:field="*{DOB}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Gender</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" th:value="${userData.gender}" th:field="*{gender}">
+                        <input name="address" type="text" class="form-control" id="Address" th:field="*{gender}">
                       </div>
                     </div>
 

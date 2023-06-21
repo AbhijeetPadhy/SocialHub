@@ -1,7 +1,6 @@
 package com.abhijeetpadhy.SocialHub.business.service;
 
-import com.abhijeetpadhy.SocialHub.business.domain.UserDataInputDTO;
-import com.abhijeetpadhy.SocialHub.model.entity.Posts;
+import com.abhijeetpadhy.SocialHub.business.domain.UserDataDTO;
 import com.abhijeetpadhy.SocialHub.model.entity.User;
 import com.abhijeetpadhy.SocialHub.model.entity.UserData;
 import com.abhijeetpadhy.SocialHub.model.repository.UserDataRepository;
@@ -29,21 +28,21 @@ public class ProfileService {
         this.userDataRepository = userDataRepository;
     }
 
-    public boolean updateUserData(UserDataInputDTO userDataInputDTO, String username) {
+    public boolean updateUserData(UserDataDTO userDataDTO, String username) {
         UserData userData = userDataRepository.findByUsername(username);
         User user = userRepository.findByUsername(username);
-        userData.setAbout(userDataInputDTO.getAbout());
-        userData.setDOB(userDataInputDTO.getDOB());
-        userData.setGender(userDataInputDTO.getGender());
+        userData.setAbout(userDataDTO.getAbout());
+        userData.setDOB(userDataDTO.getDOB());
+        userData.setGender(userDataDTO.getGender());
         userData.setUsername(username);
-        userData.setPlace(userDataInputDTO.getPlace());
-        userData.setProfession(userDataInputDTO.getProfession());
-        userData.setLastModified(userDataInputDTO.getLastUpdated());
+        userData.setPlace(userDataDTO.getPlace());
+        userData.setProfession(userDataDTO.getProfession());
+        userData.setLastModified(userDataDTO.getLastModified());
         userDataRepository.save(userData);
 
-        user.setName(userDataInputDTO.getName());
+        user.setName(userDataDTO.getName());
 
-        MultipartFile image = userDataInputDTO.getImage();
+        MultipartFile image = userDataDTO.getImage();
         if(image == null || image.isEmpty()) {
             userRepository.save(user);
             return true;
